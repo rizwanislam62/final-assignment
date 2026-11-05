@@ -1,0 +1,16 @@
+destination_id,name,region,distance_km,coastal
+BAR,Barcelona,Catalonia,620,yes
+VAL,Valencia,Valencian Community,355,yes
+SEV,Seville,Andalusia,530,no
+MAL,Malaga,Andalusia,530,yes
+GRA,Granada,Andalusia,420,no
+COR,Cordoba,Andalusia,400,no
+BIL,Bilbao,Basque Country,400,yes
+SSE,San Sebastian,Basque Country,450,yes
+ZAR,Zaragoza,Aragon,320,no
+ALI,Alicante,Valencian Community,420,yes
+MUR,Murcia,Region of Murcia,400,no
+SAL,Salamanca,Castile and Leon,215,no
+TOL,Toledo,Castile-La Mancha,75,no
+SCQ,Santiago de Compostela,Galicia,600,no
+CAD,Cadiz,Andalusia,650,yes

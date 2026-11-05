@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+logs/*.log
+state/*.json
+state/*.tmp
+
+# course material - not redistributed
+*Specification.pdf

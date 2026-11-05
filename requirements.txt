@@ -1,0 +1,8 @@
+# The application itself uses only the Python standard library (Python 3.10+; developed on 3.12.10).
+#
+# Needed to run the automated tests:
+pytest>=8.0
+#
+# Needed only to regenerate the diagrams and the PDF report (not by the application):
+matplotlib>=3.8
+reportlab>=4.0

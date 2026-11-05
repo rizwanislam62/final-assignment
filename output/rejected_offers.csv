@@ -1,0 +1,12 @@
+line,record_id,category,message,offer_id,company_id,destination_id,departure,arrival,duration_min,price_eur,transfers,luggage_kg,fare_type,changeable,change_fee_eur,refundable,seats_available,rating,co2_kg
+1858,SOL-MAL-9001,NEGATIVE_PRICE,price -12.50 is negative,SOL-MAL-9001,SOL,MAL,2027-07-12T08:00,2027-07-12T16:00,480,-12.50,0,20,basic,false,0.00,false,10,4.0,10.0
+1859,CAM-IBZ-9001,UNKNOWN_DESTINATION,destination 'IBZ' is not served,CAM-IBZ-9001,CAM,IBZ,2027-07-12T08:00,2027-07-12T14:00,360,40.00,0,20,basic,false,0.00,false,10,4.0,10.0
+1860,XYZ-VAL-9001,UNKNOWN_COMPANY,company 'XYZ' does not exist,XYZ-VAL-9001,XYZ,VAL,2027-07-12T08:00,2027-07-12T12:30,270,20.00,0,20,basic,false,0.00,false,10,4.0,10.0
+1861,COS-MAL-9001,INVALID_DATE,departure '2027-02-30T08:00' is not a real date/time,COS-MAL-9001,COS,MAL,2027-02-30T08:00,2027-02-30T15:00,420,30.00,0,20,basic,false,0.00,false,10,4.0,10.0
+1862,VER-MAL-9001,ARRIVAL_BEFORE_DEPARTURE,arrival 2027-07-13 09:00 is not after departure 2027-07-13 15:00,VER-MAL-9001,VER,MAL,2027-07-13T15:00,2027-07-13T09:00,360,38.00,0,20,basic,false,0.00,false,10,4.0,10.0
+1863,NOC-SEV-9001,RATING_OUT_OF_SCALE,rating 6.2 is outside 1.0-5.0,NOC-SEV-9001,NOC,SEV,2027-07-12T22:00,2027-07-13T06:30,510,31.00,0,20,basic,false,0.00,false,10,6.2,10.0
+1864,SOL-GRA-9001,NEGATIVE_SEATS,seats_available -3 is negative,SOL-GRA-9001,SOL,GRA,2027-07-12T09:00,2027-07-12T15:20,380,21.00,0,20,basic,false,0.00,false,-3,4.0,10.0
+1865,CAM-BAR-9001,MISSING_FIELD,required field 'price_eur' is empty,CAM-BAR-9001,CAM,BAR,2027-07-12T08:00,2027-07-12T15:20,440,,0,20,basic,false,0.00,false,10,4.0,10.0
+1866,SOL_MAL_77,MALFORMED_ID,offer_id 'SOL_MAL_77' does not match the pattern AAA-BBB-0000,SOL_MAL_77,SOL,MAL,2027-07-12T08:00,2027-07-12T16:00,480,25.00,0,20,basic,false,0.00,false,10,4.0,10.0
+1867,CAM-MAL-0001,DUPLICATE_ID,offer_id CAM-MAL-0001 appears more than once,CAM-MAL-0001,CAM,MAL,2027-07-10T07:30,2027-07-10T13:45,375,39.00,0,20,basic,false,0.00,false,10,4.0,10.0
+1868,VER-ZAR-9001,INVALID_NUMBER,price_eur 'free' is not a money amount,VER-ZAR-9001,VER,ZAR,2027-07-12T08:00,2027-07-12T12:20,260,free,0,20,basic,false,0.00,false,10,4.0,10.0

@@ -1,0 +1,76 @@
+profile,destination,acceptable_offers,top_offer,company,price_eur,duration_min,score,robust
+example,Barcelona,26,SOL-BAR-0020,SolRuta,35.60,560,75.92,no
+example,Valencia,45,COS-VAL-9001,CostaLink,19.50,305,78.17,no
+example,Seville,26,SOL-SEV-0010,SolRuta,30.60,535,66.66,no
+example,Malaga,37,COS-MAL-0020,CostaLink,33.25,420,78.36,yes
+example,Granada,33,CAM-GRA-0007,Camino Express,31.40,295,72.91,no
+example,Cordoba,30,CAM-COR-0007,Camino Express,29.70,285,73.00,no
+example,Bilbao,45,COS-BIL-0020,CostaLink,24.85,350,75.23,no
+example,San Sebastian,30,COS-SSE-0022,CostaLink,28.10,395,75.18,no
+example,Zaragoza,37,VER-ZAR-0012,VerdeBus,25.95,265,74.45,no
+example,Alicante,33,COS-ALI-0024,CostaLink,27.10,350,72.26,no
+example,Murcia,26,SOL-MUR-0014,SolRuta,25.10,345,74.17,no
+example,Salamanca,30,SOL-SAL-0018,SolRuta,12.00,185,78.64,no
+example,Toledo,31,VER-TOL-0010,VerdeBus,7.50,60,89.83,no
+example,Santiago de Compostela,18,SOL-SCQ-0018,SolRuta,32.95,570,73.47,yes
+example,Cadiz,20,COS-CAD-0024,CostaLink,40.30,530,84.04,yes
+budget,Barcelona,24,SOL-BAR-0019,SolRuta,30.20,560,80.00,yes
+budget,Valencia,63,COS-VAL-9001,CostaLink,19.50,305,80.52,no
+budget,Seville,23,SOL-SEV-0013,SolRuta,27.40,450,75.04,no
+budget,Malaga,45,SOL-MAL-0011,SolRuta,25.10,480,77.69,yes
+budget,Granada,44,SOL-GRA-0015,SolRuta,19.45,390,76.36,no
+budget,Cordoba,40,SOL-COR-0013,SolRuta,19.55,420,72.84,no
+budget,Bilbao,57,SOL-BIL-0009,SolRuta,18.60,380,75.52,no
+budget,San Sebastian,42,COS-SSE-0013,CostaLink,23.00,375,74.67,no
+budget,Zaragoza,49,SOL-ZAR-0011,SolRuta,15.75,300,74.46,no
+budget,Alicante,48,SOL-ALI-0015,SolRuta,19.95,360,77.07,yes
+budget,Murcia,36,SOL-MUR-0011,SolRuta,20.50,335,76.68,no
+budget,Salamanca,43,SOL-SAL-0017,SolRuta,10.20,185,79.45,no
+budget,Toledo,44,CAM-TOL-0005,Camino Express,6.00,55,89.75,no
+budget,Santiago de Compostela,21,SOL-SCQ-0017,SolRuta,27.95,570,77.94,yes
+budget,Cadiz,16,COS-CAD-0023,CostaLink,33.00,530,83.61,yes
+business,Barcelona,22,CAM-BAR-0012,Camino Express,65.50,435,81.38,no
+business,Valencia,42,CAM-VAL-0016,Camino Express,38.35,250,87.40,yes
+business,Seville,20,CAM-SEV-0012,Camino Express,59.70,360,90.00,no
+business,Malaga,30,CAM-MAL-0026,Camino Express,52.65,385,85.37,no
+business,Granada,27,CAM-GRA-0008,Camino Express,40.80,295,92.03,yes
+business,Cordoba,23,CAM-COR-0006,Camino Express,40.35,270,91.55,yes
+business,Bilbao,39,CAM-BIL-0010,Camino Express,43.15,290,84.89,no
+business,San Sebastian,27,VER-SSE-0010,VerdeBus,39.20,345,85.48,no
+business,Zaragoza,32,CAM-ZAR-0018,Camino Express,31.80,225,90.31,yes
+business,Alicante,29,CAM-ALI-0010,Camino Express,42.35,280,91.32,yes
+business,Murcia,20,CAM-MUR-0006,Camino Express,40.40,305,83.44,yes
+business,Salamanca,26,CAM-SAL-0008,Camino Express,22.05,155,86.22,yes
+business,Toledo,31,VER-TOL-0010,VerdeBus,7.50,60,91.83,yes
+business,Santiago de Compostela,9,CAM-SCQ-0006,Camino Express,60.50,445,85.55,no
+business,Cadiz,2,CAM-CAD-0008,Camino Express,73.65,475,90.00,no
+flexible,Barcelona,47,VER-BAR-0016,VerdeBus,51.75,530,85.27,no
+flexible,Valencia,45,VER-VAL-0020,VerdeBus,30.90,280,84.97,yes
+flexible,Seville,35,VER-SEV-0020,VerdeBus,45.40,445,84.93,yes
+flexible,Malaga,44,VER-MAL-0012,VerdeBus,44.10,435,86.02,yes
+flexible,Granada,33,VER-GRA-0012,VerdeBus,37.95,325,83.29,no
+flexible,Cordoba,30,VER-COR-0012,VerdeBus,34.70,340,84.32,yes
+flexible,Bilbao,45,VER-BIL-0012,VerdeBus,32.45,325,85.81,no
+flexible,San Sebastian,32,VER-SSE-0016,VerdeBus,43.10,355,83.32,no
+flexible,Zaragoza,37,VER-ZAR-0016,VerdeBus,26.45,255,86.56,yes
+flexible,Alicante,33,VER-ALI-0016,VerdeBus,37.65,325,78.44,no
+flexible,Murcia,26,VER-MUR-0016,VerdeBus,32.30,345,86.76,no
+flexible,Salamanca,30,VER-SAL-0012,VerdeBus,17.50,170,86.90,yes
+flexible,Toledo,31,VER-TOL-0020,VerdeBus,7.50,60,95.08,no
+flexible,Santiago de Compostela,28,VER-SCQ-0016,VerdeBus,49.10,490,86.69,yes
+flexible,Cadiz,30,VER-CAD-0020,VerdeBus,53.80,560,84.89,no
+eco,Barcelona,54,VER-BAR-0009,VerdeBus,40.00,520,82.36,no
+eco,Valencia,63,VER-VAL-0016,VerdeBus,29.15,275,84.80,no
+eco,Seville,44,VER-SEV-0020,VerdeBus,45.40,445,83.58,no
+eco,Malaga,62,VER-MAL-0012,VerdeBus,44.10,435,84.75,no
+eco,Granada,48,VER-GRA-0010,VerdeBus,34.55,360,83.90,no
+eco,Cordoba,42,VER-COR-0017,VerdeBus,30.35,320,81.01,no
+eco,Bilbao,62,VER-BIL-0012,VerdeBus,32.45,325,85.02,no
+eco,San Sebastian,48,VER-SSE-0013,VerdeBus,29.40,365,84.38,no
+eco,Zaragoza,47,VER-ZAR-0016,VerdeBus,26.45,255,85.28,no
+eco,Alicante,51,VER-ALI-0013,VerdeBus,29.65,330,81.30,no
+eco,Murcia,38,VER-MUR-0016,VerdeBus,32.30,345,85.30,no
+eco,Salamanca,41,VER-SAL-0012,VerdeBus,17.50,170,85.53,no
+eco,Toledo,44,VER-TOL-0020,VerdeBus,7.50,60,95.08,no
+eco,Santiago de Compostela,36,VER-SCQ-0015,VerdeBus,39.30,490,82.32,no
+eco,Cadiz,41,VER-CAD-0017,VerdeBus,43.10,515,82.44,no

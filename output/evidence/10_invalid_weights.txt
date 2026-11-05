@@ -1,0 +1,4 @@
+$ python main.py --config output/evidence/settings_demo.json search --to Malaga --from-date 2027-07-12 --to-date 2027-07-14 --weights price=50,duration=25,departure=15,flexibility=20
+Error: Weights total 110; they must total 100 (percent) or 1.0 (fractions).
+
+[exit code 2]

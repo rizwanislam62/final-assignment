@@ -1,0 +1,31 @@
+$ python main.py --config output/evidence/settings_demo.json criteria
+
+Ranking criteria (soft preferences)
+===================================
+Key          Label          Type      How it is scored (0-100, 100 = best)
+-----------  -------------  --------  ----------------------------------------------------------------------------------------------------------------------------------
+price        Price          core      Ticket price; cheapest acceptable offer = 100 (robust min-max, lower is better).
+duration     Duration       core      Journey time; fastest acceptable offer = 100 (robust min-max, lower is better).
+departure    Departure fit  core      Minutes outside the preferred departure window; 100 inside the window, falling linearly to 0 at the decay limit (default 4 hours).
+flexibility  Flexibility    core      Fare flexibility points: free changes 60, changes with a fee 40, no changes 0; refundable adds 40 (max 100).
+transfers    Transfers      optional  Direct = 100, one transfer = 50, two or more = 0.
+rating       Rating         optional  Customer rating mapped linearly from the rating scale (1-5) to 0-100.
+emissions    CO2            optional  Estimated CO2 per passenger; lowest acceptable offer = 100 (robust min-max).
+
+Default weights: price=40, duration=25, departure=15, flexibility=20
+
+Hard constraints
+================
+Key            Label                 Kind
+-------------  --------------------  --------------------
+destination    Destination           journey scope
+travel_window  Travel window         journey scope
+seats          Seat availability     traveller constraint
+budget         Maximum budget        traveller constraint
+max_transfers  Maximum transfers     traveller constraint
+changeable     Changeable ticket     traveller constraint
+refundable     Refundable ticket     traveller constraint
+luggage        Luggage allowance     traveller constraint
+max_duration   Maximum journey time  traveller constraint
+
+[exit code 0]

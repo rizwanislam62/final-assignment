@@ -1,0 +1,4 @@
+$ python main.py --config output/evidence/settings_demo.json book --offer SOL-BAR-0001 --name Ola Nordmann
+Error: Offer SOL-BAR-0001 has 0 seat(s) left; 1 requested.
+
+[exit code 2]

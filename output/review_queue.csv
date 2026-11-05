@@ -1,0 +1,5 @@
+line,record_id,category,message,offer_id,company_id,destination_id,departure,arrival,duration_min,price_eur,transfers,luggage_kg,fare_type,changeable,change_fee_eur,refundable,seats_available,rating,co2_kg
+1869,VER-BIL-9001,DURATION_MISMATCH,duration_min 240 disagrees with timestamps (330 min),VER-BIL-9001,VER,BIL,2027-07-12T08:00,2027-07-12T13:30,240,29.00,0,20,basic,false,0.00,false,10,4.0,10.0
+1870,COS-ALI-9001,ID_MISMATCH,offer_id prefix COS-ALI disagrees with company_id SOL / destination_id ALI,COS-ALI-9001,SOL,ALI,2027-07-12T08:00,2027-07-12T14:00,360,22.00,0,20,basic,false,0.00,false,10,4.0,10.0
+1871,CAM-BAR-9002,IMPLAUSIBLE_SPEED,620 km in 120 min is 310 km/h,CAM-BAR-9002,CAM,BAR,2027-07-12T08:00,2027-07-12T10:00,120,49.00,0,20,basic,false,0.00,false,10,4.0,10.0
+1872,SOL-TOL-9001,FARE_INCONSISTENT,change fee 5.00 given for a non-changeable fare,SOL-TOL-9001,SOL,TOL,2027-07-12T09:00,2027-07-12T10:15,75,6.50,0,20,basic,false,5.00,false,10,4.0,10.0

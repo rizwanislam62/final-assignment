@@ -1,0 +1,29 @@
+{
+  "bookings": [
+    {
+      "reference": "BB-20270713-FU9NHK",
+      "offer_id": "COS-MAL-0020",
+      "traveller_name": "Ana Lopez",
+      "seats": 2,
+      "company": "CostaLink",
+      "destination": "Malaga",
+      "departure": "2027-07-13T06:25",
+      "arrival": "2027-07-13T13:25",
+      "price_per_seat_eur": 33.25,
+      "total_price_eur": 66.5,
+      "fare": {
+        "fare_type": "flex",
+        "changeable": true,
+        "change_fee_eur": 0.0,
+        "refundable": false,
+        "luggage_kg": 25
+      },
+      "status": "CANCELLED",
+      "payment_status": "TRAVEL CREDIT ISSUED (simulated)",
+      "created_at": "2027-07-01T09:00:00",
+      "cancelled_at": "2027-07-01T09:00:00",
+      "refund_eur": 0.0,
+      "travel_credit_eur": 66.5
+    }
+  ]
+}

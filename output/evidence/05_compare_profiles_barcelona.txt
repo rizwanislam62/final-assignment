@@ -1,0 +1,72 @@
+$ python main.py --config output/evidence/settings_demo.json compare --to Barcelona --from-date 2027-07-12 --to-date 2027-07-14
+
+Same offers, different travellers: Madrid -> Barcelona, 12 Jul to 14 Jul 2027
+=============================================================================
+
+--- Example traveller (specification) [example] ---
+    The request from the project specification: EUR 50, morning, max 1 transfer, changeable ticket.
+    Hard: Maximum price: EUR 50.00 per passenger; Maximum transfers: 1; Changeable ticket: required
+    Soft: departure morning (06:00-12:00); weights Price 40%, Duration 25%, Flexibility 20%, Departure fit 15%
+    26 of 66 offers acceptable
+    #  Offer         Company    Departs       Time    EUR  Tr  Fare  Total
+    -  ------------  ---------  ------------  ----  -----  --  ----  -----
+    1  SOL-BAR-0020  SolRuta    Wed 14 12:10  9h20  35.60   0  C5     75.9
+    2  COS-BAR-0016  CostaLink  Tue 13 10:15  8h55  39.55   0  C      72.1
+    3  COS-BAR-0020  CostaLink  Wed 14 10:25  8h15  42.10   0  C      69.2
+
+--- Budget traveller [budget] ---
+    Student on a tight budget: price dominates, accepts transfers and rigid tickets.
+    Hard: Maximum price: EUR 40.00 per passenger; Maximum transfers: 2
+    Soft: departure any time; weights Price 65%, Duration 15%, Flexibility 15%, Departure fit 5%
+    24 of 66 offers acceptable
+    #  Offer         Company    Departs       Time    EUR  Tr  Fare  Total
+    -  ------------  ---------  ------------  ----  -----  --  ----  -----
+    1  SOL-BAR-0019  SolRuta    Wed 14 12:10  9h20  30.20   0  -      80.0
+    2  SOL-BAR-0011  SolRuta    Mon 12 17:20  9h30  31.70   1  -      69.5
+    3  COS-BAR-0011  CostaLink  Mon 12 14:00  9h10  32.00   0  -      69.1
+
+--- Business traveller [business] ---
+    Needs a direct, fast, changeable trip leaving early morning; price matters little.
+    Hard: Maximum price: EUR 90.00 per passenger; Maximum transfers: 0; Changeable ticket: required; Maximum journey time: 8h00
+    Soft: departure 07:30 (07:00-08:00); weights Duration 40%, Departure fit 30%, Flexibility 20%, Price 10%
+    22 of 66 offers acceptable
+    #  Offer         Company         Departs       Time    EUR  Tr  Fare  Total
+    -  ------------  --------------  ------------  ----  -----  --  ----  -----
+    1  CAM-BAR-0012  Camino Express  Mon 12 07:30  7h15  65.50   0  C+R    81.4
+    2  CAM-BAR-0011  Camino Express  Mon 12 07:30  7h15  50.40   0  C10    75.4
+    3  CAM-BAR-0018  Camino Express  Tue 13 07:30  7h30  59.40   0  C+R    73.8
+
+--- Flexibility-focused tourist [flexible] ---
+    Plans may change: wants free changes or refunds, likes good service, prefers afternoons.
+    Hard: Maximum price: EUR 70.00 per passenger; Maximum transfers: 1; Changeable ticket: required; Luggage allowance: at least 20 kg
+    Soft: departure afternoon (12:00-18:00); weights Flexibility 45%, Price 20%, Departure fit 15%, Duration 10%, Rating 10%
+    47 of 66 offers acceptable
+    #  Offer         Company   Departs       Time    EUR  Tr  Fare  Total
+    -  ------------  --------  ------------  ----  -----  --  ----  -----
+    1  VER-BAR-0016  VerdeBus  Tue 13 15:40  8h50  51.75   0  C+R    85.3
+    2  VER-BAR-0012  VerdeBus  Mon 12 16:10  8h00  55.00   0  C+R    84.0
+    3  VER-BAR-0020  VerdeBus  Wed 14 13:30  8h00  59.30   0  C+R    82.2
+
+--- Environment-focused traveller [eco] ---
+    Chooses the lowest-emission option within a moderate budget.
+    Hard: Maximum price: EUR 60.00 per passenger; Maximum transfers: 1
+    Soft: departure any time; weights CO2 45%, Price 20%, Duration 10%, Flexibility 10%, Rating 10%, Departure fit 5%
+    54 of 66 offers acceptable
+    #  Offer         Company   Departs       Time    EUR  Tr  Fare  Total
+    -  ------------  --------  ------------  ----  -----  --  ----  -----
+    1  VER-BAR-0009  VerdeBus  Mon 12 08:10  8h40  40.00   1  C5     82.4
+    2  VER-BAR-0010  VerdeBus  Mon 12 08:10  8h40  49.95   1  C+R    81.6
+    3  VER-BAR-0015  VerdeBus  Tue 13 15:40  8h50  41.40   0  C5     81.5
+
+Summary of recommendations
+==========================
+Traveller                          Top offer     Company         Departs       Time    EUR  Fare  Score  Robust
+---------------------------------  ------------  --------------  ------------  ----  -----  ----  -----  ------
+Example traveller (specification)  SOL-BAR-0020  SolRuta         Wed 14 12:10  9h20  35.60  C5     75.9  no
+Budget traveller                   SOL-BAR-0019  SolRuta         Wed 14 12:10  9h20  30.20  -      80.0  yes
+Business traveller                 CAM-BAR-0012  Camino Express  Mon 12 07:30  7h15  65.50  C+R    81.4  no
+Flexibility-focused tourist        VER-BAR-0016  VerdeBus        Tue 13 15:40  8h50  51.75  C+R    85.3  no
+Environment-focused traveller      VER-BAR-0009  VerdeBus        Mon 12 08:10  8h40  40.00  C5     82.4  no
+Robust = the top offer stays first when any single weight moves by +/-10 percentage points.
+
+[exit code 0]

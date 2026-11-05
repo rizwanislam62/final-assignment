@@ -1,0 +1,4 @@
+$ python main.py --config output/evidence/settings_demo.json search --to Malga --from-date 2027-07-12
+Error: 'Malga' is not a BusBidder destination. Did you mean: Malaga? Served destinations: Alicante, Barcelona, Bilbao, Cadiz, Cordoba, Granada, Malaga, Murcia, Salamanca, San Sebastian, Santiago de Compostela, Seville, Toledo, Valencia, Zaragoza.
+
+[exit code 2]

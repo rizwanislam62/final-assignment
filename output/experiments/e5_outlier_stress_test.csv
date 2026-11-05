@@ -1,0 +1,5 @@
+setting,winner,price-score range of normal offers,std dev,top 3
+"robust, no outlier",COS-MAL-0020,0-100,25.7,COS-MAL-0020 COS-MAL-0026 COS-MAL-0014
+"robust, with outlier",COS-MAL-0020,4-100,24.6,COS-MAL-0020 COS-MAL-0026 COS-MAL-0014
+"plain, no outlier",COS-MAL-0020,0-100,25.5,COS-MAL-0020 COS-MAL-0026 COS-MAL-0014
+"plain, with outlier",CAM-MAL-0022,80-100,5.1,CAM-MAL-0022 CAM-MAL-0026 CAM-MAL-0014

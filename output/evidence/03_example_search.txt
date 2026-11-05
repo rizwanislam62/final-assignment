@@ -1,0 +1,63 @@
+$ python main.py --config output/evidence/settings_demo.json search --to Malaga --from-date 2027-07-12 --to-date 2027-07-14 --budget 50 --depart morning --max-transfers 1 --changeable --weights price=40,duration=25,departure=15,flexibility=20 --show-removed 10 --top 10 --export output/evidence/ranking_example.csv
+
+BusBidder Spain - offers for Custom traveller
+=============================================
+HARD CONSTRAINTS - an offer that breaks any of these is removed before ranking:
+  * Journey: Madrid -> Malaga
+  * Travel window: 12 Jul 2027 to 14 Jul 2027
+  * Seats needed: 1
+  * Maximum price: EUR 50.00 per passenger
+  * Maximum transfers: 1
+  * Changeable ticket: required
+SOFT PREFERENCES - these only change the score, they never remove an offer:
+  * Preferred departure: morning (06:00-12:00)
+  * Weights: Price 40%, Duration 25%, Flexibility 20%, Departure fit 15%
+
+66 offers match the journey and dates; 29 removed by hard constraints; 37 acceptable.
+Removed because of -> Changeable ticket: 19, Maximum budget: 8, Maximum transfers: 2, Seat availability: 2  (one offer can break several constraints)
+
+Removed offers (hard-constraint violations)
+===========================================
+Offer         Company         Departs         EUR  Reason(s)
+------------  --------------  ------------  -----  -----------------------------------------
+SOL-MAL-0009  SolRuta         Mon 12 15:20  27.65  ticket cannot be changed
+SOL-MAL-0011  SolRuta         Mon 12 16:40  25.10  ticket cannot be changed
+SOL-MAL-0013  SolRuta         Tue 13 06:50  25.90  ticket cannot be changed
+SOL-MAL-0015  SolRuta         Tue 13 12:10  27.05  ticket cannot be changed
+SOL-MAL-0017  SolRuta         Wed 14 07:20  25.20  2 transfers > 1; ticket cannot be changed
+SOL-MAL-0018  SolRuta         Wed 14 07:20  29.70  2 transfers > 1
+SOL-MAL-0019  SolRuta         Wed 14 11:40  28.90  ticket cannot be changed
+CAM-MAL-0013  Camino Express  Mon 12 07:30  41.70  sold out
+CAM-MAL-0014  Camino Express  Mon 12 07:30  54.20  EUR 54.20 > budget EUR 50.00
+CAM-MAL-0016  Camino Express  Mon 12 15:30  54.55  EUR 54.55 > budget EUR 50.00
+... and 19 more
+
+Ranked offers (showing 10 of 37)
+================================
+ #  Offer         Company         Date    Dep    Arr    Time    EUR  Tr  Fare  Kg  Seats  |  Price  Dur  DepFit  Flex  |  Total
+--  ------------  --------------  ------  -----  -----  ----  -----  --  ----  --  -----  -  -----  ---  ------  ----  -  -----
+ 1  COS-MAL-0020  CostaLink       Tue 13  06:25  13:25  7h00  33.25   0  C     25      2  |     82   74     100    60  |   78.4
+ 2  COS-MAL-0026  CostaLink       Wed 14  06:55  14:35  7h40  33.45   0  C     25      5  |     81   56     100    60  |   73.3
+ 3  SOL-MAL-0016  SolRuta         Tue 13  12:10  19:45  7h35  31.90   0  C5    20     44  |     89   58      96    40  |   72.3
+ 4  SOL-MAL-0014  SolRuta         Tue 13  06:50  15:00  8h10  30.60   1  C5    20     22  |     95   42     100    40  |   71.5
+ 5  COS-MAL-0014  CostaLink       Mon 12  06:35  13:50  7h15  36.35   0  C     25      3  |     67   67     100    60  |   70.5
+ 6  COS-MAL-0016  CostaLink       Mon 12  09:55  17:45  7h50  35.20   0  C     25     32  |     72   51     100    60  |   68.7
+ 7  VER-MAL-0009  VerdeBus        Mon 12  08:00  15:35  7h35  34.90   0  C5    20     31  |     74   58     100    40  |   67.0
+ 8  CAM-MAL-0021  Camino Express  Tue 13  11:00  17:25  6h25  39.95   0  C10   20     30  |     49   91     100    40  |   65.1
+ 9  CAM-MAL-0025  Camino Express  Wed 14  07:10  13:35  6h25  40.50   0  C10   20     13  |     46   91     100    40  |   64.0
+10  SOL-MAL-0020  SolRuta         Wed 14  11:40  19:55  8h15  34.10   0  C5    20     10  |     78   40     100    40  |   64.0
+Criterion scores are 0-100 (100 = best); Total = weighted sum of the scores. Fare: C = free changes, C5 = changes cost EUR 5, R = refundable, - = neither. +1 = arrives next day.
+
+Recommendation
+==============
+- CostaLink COS-MAL-0020 on Tue 13 Jul ranks first with 78.4/100 under your preferences.
+- Why it ranks highest: it offers a low price (EUR 33.25, only EUR 3.65 above the cheapest acceptable offer), a convenient departure at 06:25, inside your preferred morning (06:00-12:00) window and a direct route.
+- Remaining disadvantages: no weighted criterion scores below 50/100.
+- Moderate on: duration (7h00; 74/100) and flexibility (flex: free changes, non-refundable, 25 kg luggage; 60/100).
+- Compared with #2 (CostaLink COS-MAL-0026, 73.3), it gains points on duration (+4.7) and price (+0.4); margin 5.05 points.
+- Robustness: the winner stays the same if any single weight is moved by +/-10 percentage points.
+- Note: this is the best match only under your hard constraints, your weights (price 40%, duration 25%, flexibility 20%, departure fit 15%) and the scoring assumptions - not an objectively best bus.
+
+Ranking exported to D:\final assignment acit4420\output\evidence\ranking_example.csv
+
+[exit code 0]

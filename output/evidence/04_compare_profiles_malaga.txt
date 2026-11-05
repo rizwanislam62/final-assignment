@@ -1,0 +1,107 @@
+$ python main.py --config output/evidence/settings_demo.json compare --to Malaga --from-date 2027-07-12 --to-date 2027-07-14 --explain --export-dir output/evidence/rankings_malaga
+
+Same offers, different travellers: Madrid -> Malaga, 12 Jul to 14 Jul 2027
+==========================================================================
+
+--- Example traveller (specification) [example] ---
+    The request from the project specification: EUR 50, morning, max 1 transfer, changeable ticket.
+    Hard: Maximum price: EUR 50.00 per passenger; Maximum transfers: 1; Changeable ticket: required
+    Soft: departure morning (06:00-12:00); weights Price 40%, Duration 25%, Flexibility 20%, Departure fit 15%
+    37 of 66 offers acceptable
+    #  Offer         Company    Departs       Time    EUR  Tr  Fare  Total
+    -  ------------  ---------  ------------  ----  -----  --  ----  -----
+    1  COS-MAL-0020  CostaLink  Tue 13 06:25  7h00  33.25   0  C      78.4
+    2  COS-MAL-0026  CostaLink  Wed 14 06:55  7h40  33.45   0  C      73.3
+    3  SOL-MAL-0016  SolRuta    Tue 13 12:10  7h35  31.90   0  C5     72.3
+    - CostaLink COS-MAL-0020 on Tue 13 Jul ranks first with 78.4/100 under your preferences.
+    - Why it ranks highest: it offers a low price (EUR 33.25, only EUR 3.65 above the cheapest acceptable offer), a convenient departure at 06:25, inside your preferred morning (06:00-12:00) window and a direct route.
+    - Remaining disadvantages: no weighted criterion scores below 50/100.
+    - Moderate on: duration (7h00; 74/100) and flexibility (flex: free changes, non-refundable, 25 kg luggage; 60/100).
+    - Compared with #2 (CostaLink COS-MAL-0026, 73.3), it gains points on duration (+4.7) and price (+0.4); margin 5.05 points.
+    - Robustness: the winner stays the same if any single weight is moved by +/-10 percentage points.
+    - Note: this is the best match only under your hard constraints, your weights (price 40%, duration 25%, flexibility 20%, departure fit 15%) and the scoring assumptions - not an objectively best bus.
+
+--- Budget traveller [budget] ---
+    Student on a tight budget: price dominates, accepts transfers and rigid tickets.
+    Hard: Maximum price: EUR 40.00 per passenger; Maximum transfers: 2
+    Soft: departure any time; weights Price 65%, Duration 15%, Flexibility 15%, Departure fit 5%
+    45 of 66 offers acceptable
+    #  Offer         Company    Departs       Time    EUR  Tr  Fare  Total
+    -  ------------  ---------  ------------  ----  -----  --  ----  -----
+    1  SOL-MAL-0011  SolRuta    Mon 12 16:40  8h00  25.10   0  -      77.7
+    2  SOL-MAL-0013  SolRuta    Tue 13 06:50  8h10  25.90   1  -      73.4
+    3  COS-MAL-0019  CostaLink  Tue 13 06:25  7h00  27.25   0  -      72.9
+    - SolRuta SOL-MAL-0011 on Mon 12 Jul ranks first with 77.7/100 under your preferences.
+    - Why it ranks highest: it offers the lowest price among acceptable offers (EUR 25.10) and a direct route.
+    - Remaining disadvantages: a restrictive fare (basic: no changes, non-refundable, 15 kg luggage).
+    - Moderate on: duration (8h00; 51/100).
+    - Compared with #2 (SolRuta SOL-MAL-0013, 73.4), it gains points on price (+3.5) and duration (+0.8); margin 4.27 points.
+    - Robustness: the winner stays the same if any single weight is moved by +/-10 percentage points.
+    - Note: this is the best match only under your hard constraints, your weights (price 65%, duration 15%, flexibility 15%, departure fit 5%) and the scoring assumptions - not an objectively best bus.
+
+--- Business traveller [business] ---
+    Needs a direct, fast, changeable trip leaving early morning; price matters little.
+    Hard: Maximum price: EUR 90.00 per passenger; Maximum transfers: 0; Changeable ticket: required; Maximum journey time: 8h00
+    Soft: departure 07:30 (07:00-08:00); weights Duration 40%, Departure fit 30%, Flexibility 20%, Price 10%
+    30 of 66 offers acceptable
+    #  Offer         Company         Departs       Time    EUR  Tr  Fare  Total
+    -  ------------  --------------  ------------  ----  -----  --  ----  -----
+    1  CAM-MAL-0026  Camino Express  Wed 14 07:10  6h25  52.65   0  C+R    85.4
+    2  CAM-MAL-0014  Camino Express  Mon 12 07:30  6h25  54.20   0  C+R    84.9
+    3  CAM-MAL-0020  Camino Express  Tue 13 07:30  6h20  59.65   0  C+R    84.8
+    - Camino Express CAM-MAL-0026 on Wed 14 Jul ranks first with 85.4/100 under your preferences.
+    - Why it ranks highest: it offers a short journey (6h25, only 20 min longer than the fastest acceptable offer), a convenient departure at 07:10, inside your preferred 07:30 (07:00-08:00) window, a flexible fare (flex: free changes, refundable, 30 kg luggage) and a direct route.
+    - Remaining disadvantages: a higher price (EUR 52.65, EUR 23.05 more than the cheapest acceptable offer from SolRuta).
+    - Compared with #2 (Camino Express CAM-MAL-0014, 84.9), it gains points on price (+0.5); margin 0.52 points.
+    - Sensitivity: the winner changes if a weight moves by 10 pp (price -10 pp -> Camino Express CAM-MAL-0020; duration +10 pp -> Camino Express CAM-MAL-0020).
+    - Note: this is the best match only under your hard constraints, your weights (duration 40%, departure fit 30%, flexibility 20%, price 10%) and the scoring assumptions - not an objectively best bus.
+
+--- Flexibility-focused tourist [flexible] ---
+    Plans may change: wants free changes or refunds, likes good service, prefers afternoons.
+    Hard: Maximum price: EUR 70.00 per passenger; Maximum transfers: 1; Changeable ticket: required; Luggage allowance: at least 20 kg
+    Soft: departure afternoon (12:00-18:00); weights Flexibility 45%, Price 20%, Departure fit 15%, Duration 10%, Rating 10%
+    44 of 66 offers acceptable
+    #  Offer         Company         Departs       Time    EUR  Tr  Fare  Total
+    -  ------------  --------------  ------------  ----  -----  --  ----  -----
+    1  VER-MAL-0012  VerdeBus        Mon 12 16:10  7h15  44.10   0  C+R    86.0
+    2  VER-MAL-0016  VerdeBus        Tue 13 16:00  8h00  44.95   1  C+R    83.6
+    3  CAM-MAL-0016  Camino Express  Mon 12 15:30  6h25  54.55   0  C+R    80.6
+    - VerdeBus VER-MAL-0012 on Mon 12 Jul ranks first with 86.0/100 under your preferences.
+    - Why it ranks highest: it offers a flexible fare (flex: free changes, refundable, 25 kg luggage), a convenient departure at 16:10, inside your preferred afternoon (12:00-18:00) window, a customer rating of 4.6/5 and a direct route.
+    - Remaining disadvantages: no weighted criterion scores below 50/100.
+    - Moderate on: price (EUR 44.10; 51/100) and duration (7h15; 67/100).
+    - Compared with #2 (VerdeBus VER-MAL-0016, 83.6), it gains points on duration (+2.1) and price (+0.6) but loses on rating (-0.3); margin 2.41 points.
+    - Robustness: the winner stays the same if any single weight is moved by +/-10 percentage points.
+    - Note: this is the best match only under your hard constraints, your weights (flexibility 45%, price 20%, departure fit 15%, duration 10%, rating 10%) and the scoring assumptions - not an objectively best bus.
+
+--- Environment-focused traveller [eco] ---
+    Chooses the lowest-emission option within a moderate budget.
+    Hard: Maximum price: EUR 60.00 per passenger; Maximum transfers: 1
+    Soft: departure any time; weights CO2 45%, Price 20%, Duration 10%, Flexibility 10%, Rating 10%, Departure fit 5%
+    62 of 66 offers acceptable
+    #  Offer         Company   Departs       Time    EUR  Tr  Fare  Total
+    -  ------------  --------  ------------  ----  -----  --  ----  -----
+    1  VER-MAL-0012  VerdeBus  Mon 12 16:10  7h15  44.10   0  C+R    84.7
+    2  VER-MAL-0010  VerdeBus  Mon 12 08:00  7h35  43.65   0  C+R    84.1
+    3  VER-MAL-0011  VerdeBus  Mon 12 16:10  7h15  35.30   0  C5     83.8
+    - VerdeBus VER-MAL-0012 on Mon 12 Jul ranks first with 84.7/100 under your preferences.
+    - Why it ranks highest: it offers the lowest estimated CO2 (6.4 kg per passenger), a flexible fare (flex: free changes, refundable, 25 kg luggage), a customer rating of 4.6/5 and a direct route.
+    - Remaining disadvantages: a higher price (EUR 44.10, EUR 19.00 more than the cheapest acceptable offer from SolRuta).
+    - Moderate on: duration (7h15; 67/100).
+    - Compared with #2 (VerdeBus VER-MAL-0010, 84.1), it gains points on duration (+0.9) but loses on price (-0.3); margin 0.67 points.
+    - Sensitivity: the winner changes if a weight moves by 10 pp (price +10 pp -> VerdeBus VER-MAL-0011; duration -10 pp -> VerdeBus VER-MAL-0010; flexibility -10 pp -> VerdeBus VER-MAL-0011).
+    - Note: this is the best match only under your hard constraints, your weights (co2 45%, price 20%, duration 10%, flexibility 10%, rating 10%, departure fit 5%) and the scoring assumptions - not an objectively best bus.
+
+Summary of recommendations
+==========================
+Traveller                          Top offer     Company         Departs       Time    EUR  Fare  Score  Robust
+---------------------------------  ------------  --------------  ------------  ----  -----  ----  -----  ------
+Example traveller (specification)  COS-MAL-0020  CostaLink       Tue 13 06:25  7h00  33.25  C      78.4  yes
+Budget traveller                   SOL-MAL-0011  SolRuta         Mon 12 16:40  8h00  25.10  -      77.7  yes
+Business traveller                 CAM-MAL-0026  Camino Express  Wed 14 07:10  6h25  52.65  C+R    85.4  no
+Flexibility-focused tourist        VER-MAL-0012  VerdeBus        Mon 12 16:10  7h15  44.10  C+R    86.0  yes
+Environment-focused traveller      VER-MAL-0012  VerdeBus        Mon 12 16:10  7h15  44.10  C+R    84.7  no
+Robust = the top offer stays first when any single weight moves by +/-10 percentage points.
+Rankings exported to D:\final assignment acit4420\output\evidence\rankings_malaga
+
+[exit code 0]

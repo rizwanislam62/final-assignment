@@ -1,0 +1,30 @@
+$ python main.py --config output/evidence/settings_demo.json search --to Malaga --from-date 2027-07-12 --to-date 2027-07-14 --budget 10 --show-removed 5
+
+BusBidder Spain - offers for Custom traveller
+=============================================
+HARD CONSTRAINTS - an offer that breaks any of these is removed before ranking:
+  * Journey: Madrid -> Malaga
+  * Travel window: 12 Jul 2027 to 14 Jul 2027
+  * Seats needed: 1
+  * Maximum price: EUR 10.00 per passenger
+SOFT PREFERENCES - these only change the score, they never remove an offer:
+  * Preferred departure: any time
+  * Weights: Price 40%, Duration 25%, Flexibility 20%, Departure fit 15%
+
+66 offers match the journey and dates; 66 removed by hard constraints; 0 acceptable.
+Removed because of -> Maximum budget: 66, Seat availability: 2  (one offer can break several constraints)
+
+Removed offers (hard-constraint violations)
+===========================================
+Offer         Company  Departs         EUR  Reason(s)
+------------  -------  ------------  -----  ----------------------------
+SOL-MAL-0009  SolRuta  Mon 12 15:20  27.65  EUR 27.65 > budget EUR 10.00
+SOL-MAL-0010  SolRuta  Mon 12 15:20  32.65  EUR 32.65 > budget EUR 10.00
+SOL-MAL-0011  SolRuta  Mon 12 16:40  25.10  EUR 25.10 > budget EUR 10.00
+SOL-MAL-0012  SolRuta  Mon 12 16:40  29.60  EUR 29.60 > budget EUR 10.00
+SOL-MAL-0013  SolRuta  Tue 13 06:50  25.90  EUR 25.90 > budget EUR 10.00
+... and 61 more
+
+No offer satisfies all hard constraints. Try relaxing a constraint (see the removal reasons above or use --show-removed).
+
+[exit code 0]

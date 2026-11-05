@@ -1,0 +1,9 @@
+$ python main.py --config output/evidence/settings_demo.json bookings
+
+Bookings
+========
+Reference           Status     Traveller  Offer         To      Departs           Seats    EUR  Payment
+------------------  ---------  ---------  ------------  ------  ----------------  -----  -----  ----------------
+BB-20270713-FU9NHK  CONFIRMED  Ana Lopez  COS-MAL-0020  Malaga  2027-07-13 06:25  2      66.50  PAID (simulated)
+
+[exit code 0]

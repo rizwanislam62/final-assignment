@@ -1,0 +1,20 @@
+$ python main.py --config output/evidence/settings_demo.json cancel BB-20270713-FU9NHK
+
+Booking BB-20270713-FU9NHK
+==========================
+  Status          : CANCELLED
+  Traveller       : Ana Lopez
+  Journey         : Madrid -> Malaga with CostaLink (offer COS-MAL-0020)
+  Departure       : Tuesday 13 July 2027, 06:25
+  Arrival         : Tuesday 13 July 2027, 13:25
+  Seats           : 2
+  Price           : EUR 33.25 x 2 = EUR 66.50
+  Fare conditions : flex: free changes, non-refundable, 25 kg luggage
+  Payment         : TRAVEL CREDIT ISSUED (simulated)
+  Booked at       : 2027-07-01T09:00:00
+  Cancelled at    : 2027-07-01T09:00:00
+  Refund          : EUR 0.00
+  Travel credit   : EUR 66.50
+  (Simulation only - no real payment was taken.)
+
+[exit code 0]

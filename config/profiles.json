@@ -1,0 +1,57 @@
+{
+  "example": {
+    "name": "Example traveller (specification)",
+    "description": "The request from the project specification: EUR 50, morning, max 1 transfer, changeable ticket.",
+    "constraints": {
+      "max_budget_eur": 50,
+      "max_transfers": 1,
+      "changeable_required": true
+    },
+    "preferences": { "departure": "morning" },
+    "weights": { "price": 40, "duration": 25, "departure": 15, "flexibility": 20 }
+  },
+  "budget": {
+    "name": "Budget traveller",
+    "description": "Student on a tight budget: price dominates, accepts transfers and rigid tickets.",
+    "constraints": {
+      "max_budget_eur": 40,
+      "max_transfers": 2
+    },
+    "preferences": { "departure": "any" },
+    "weights": { "price": 65, "duration": 15, "departure": 5, "flexibility": 15 }
+  },
+  "business": {
+    "name": "Business traveller",
+    "description": "Needs a direct, fast, changeable trip leaving early morning; price matters little.",
+    "constraints": {
+      "max_budget_eur": 90,
+      "max_transfers": 0,
+      "changeable_required": true,
+      "max_duration_min": 480
+    },
+    "preferences": { "departure": "07:30" },
+    "weights": { "price": 10, "duration": 40, "departure": 30, "flexibility": 20 }
+  },
+  "flexible": {
+    "name": "Flexibility-focused tourist",
+    "description": "Plans may change: wants free changes or refunds, likes good service, prefers afternoons.",
+    "constraints": {
+      "max_budget_eur": 70,
+      "max_transfers": 1,
+      "changeable_required": true,
+      "min_luggage_kg": 20
+    },
+    "preferences": { "departure": "afternoon" },
+    "weights": { "price": 20, "duration": 10, "departure": 15, "flexibility": 45, "rating": 10 }
+  },
+  "eco": {
+    "name": "Environment-focused traveller",
+    "description": "Chooses the lowest-emission option within a moderate budget.",
+    "constraints": {
+      "max_budget_eur": 60,
+      "max_transfers": 1
+    },
+    "preferences": { "departure": "any" },
+    "weights": { "price": 20, "duration": 10, "departure": 5, "flexibility": 10, "emissions": 45, "rating": 10 }
+  }
+}

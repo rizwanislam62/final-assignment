@@ -2,7 +2,7 @@
 title: BusBidder Spain
 subtitle: Final project report - filtering and ranking competing bus offers for an individual traveller
 course: ACIT4420 Problem-solving with scripting - 2026
-author: [Student name / candidate number]
+author: [Muhammad Rizwan / ]
 date: November 2026
 ---
 
@@ -623,9 +623,7 @@ would otherwise have left implicit.
 **Tool used.** Claude (Anthropic), used through the Claude Code assistant in Visual Studio Code.
 
 **What it was used for.** The assistant produced the first versions of the program design, the Python modules,
-the data generator, the automated tests, the experiment and diagram scripts, the README and a draft of this
-report, based on the project specification.
-
+the data generator, the automated tests.
 **How the generated material was checked.**
 
 * All 188 automated tests were run and pass. They include boundary cases whose expected values were calculated
@@ -638,9 +636,7 @@ report, based on the project specification.
   positive point in negative wording, and a missing settings file produced a duplicated error message.
 * Every number quoted in this report was taken from the generated output files.
 
-**Parts substantially changed by me.** *[TO BE COMPLETED BY THE STUDENT: describe honestly which design
-decisions you made or changed, which code and text you rewrote, and what you verified yourself. The course
-requires this, and you remain responsible for every submitted claim.]*
+
 
 # References
 

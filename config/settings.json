@@ -1,0 +1,39 @@
+{
+  "files": {
+    "companies": "data/companies.csv",
+    "destinations": "data/destinations.csv",
+    "offers": "data/offers.csv",
+    "profiles": "config/profiles.json",
+    "bookings": "state/bookings.json",
+    "log": "logs/busbidder.log",
+    "output_dir": "output"
+  },
+  "simulation": {
+    "now": "2027-07-01T09:00",
+    "_comment": "Simulated current time used for bookings; remove 'now' to use the real clock."
+  },
+  "validation": {
+    "rating_min": 1.0,
+    "rating_max": 5.0,
+    "duration_tolerance_min": 10,
+    "min_plausible_speed_kmh": 20.0,
+    "max_plausible_speed_kmh": 110.0
+  },
+  "scoring": {
+    "departure_decay_min": 240,
+    "min_meaningful_range": {
+      "price": 10.0,
+      "duration": 60.0,
+      "emissions": 5.0
+    },
+    "outlier_iqr_factor": 1.5,
+    "neutral_score_for_missing": 50.0,
+    "sensitivity_shift_pp": 10.0,
+    "default_weights": {
+      "price": 40,
+      "duration": 25,
+      "departure": 15,
+      "flexibility": 20
+    }
+  }
+}

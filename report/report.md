@@ -2,7 +2,7 @@
 title: BusBidder Spain
 subtitle: Final project report - filtering and ranking competing bus offers for an individual traveller
 course: ACIT4420 Problem-solving with scripting - 2026
-author: [Muhammad Rizwan / ]
+author: Muhammad Rizwan / OMET416275
 date: November 2026
 ---
 

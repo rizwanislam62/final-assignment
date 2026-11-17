@@ -105,7 +105,7 @@ The simulated clock in `config/settings.json` is set to 2027-07-01 09:00. Bookin
 python -m pytest
 ```
 
-The suite contains 188 tests. They cover normal cases, invalid values, missing data and missing files,
+The suite contains 190 tests. They cover normal cases, invalid values, missing data and missing files,
 boundary values, ranking reproducibility, booking and the command-line interface. Tests use temporary copies of
 the data, so they never change `state/` or `output/`.
 

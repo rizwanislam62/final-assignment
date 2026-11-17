@@ -7,7 +7,7 @@ from datetime import date
 
 import pytest
 
-from busbidder.cli import main, parse_duration
+from busbidder.cli import _yes_no, ask_until_valid, main, parse_duration
 from busbidder.config import load_settings
 from busbidder.exceptions import ConfigurationError, DataFileError, InvalidRequestError
 from busbidder.filters import apply_hard_constraints
@@ -137,6 +137,42 @@ def test_cli_interactive_booking_after_ranking(settings_file, settings, monkeypa
     assert code == 0
     saved = json.loads(settings.bookings_file.read_text(encoding="utf-8"))["bookings"]
     assert len(saved) == 1 and saved[0]["traveller_name"] == "Kari Hansen"
+
+
+def test_cli_interactive_reasks_after_invalid_answers(settings_file, settings, monkeypatch, capsys):
+    # Every first answer below is invalid; the session must explain the problem,
+    # ask again and still finish with a booking instead of exiting with an error.
+    answers = iter([
+        "Atlantis", "Malaga",                 # unknown destination
+        "12-07-2027", "2027-07-12",           # wrong date format
+        "2027-07-01", "2027-07-14",           # last date before first date
+        "pirate", "",                         # unknown profile -> custom
+        "cheap", "50",                        # budget not a number
+        "-1", "1",                            # negative transfers
+        "maybe", "y",                         # not y/n
+        "",                                   # refundable: default n
+        "lunchtime", "morning",               # unknown departure
+        "price=90", "",                       # invalid weights -> default
+        "n", "0", "1",                        # seats: not a number, out of range
+        "999", "1",                           # rank that does not exist
+        "X", "Kari Hansen",                   # name too short
+        "perhaps", "y",                       # confirm: not y/n
+    ])
+    monkeypatch.setattr("builtins.input", lambda prompt="": next(answers))
+    assert run_cli(settings_file) == 0
+    out = capsys.readouterr().out
+    assert out.count("Please try again.") == 14
+    saved = json.loads(settings.bookings_file.read_text(encoding="utf-8"))["bookings"]
+    assert len(saved) == 1 and saved[0]["traveller_name"] == "Kari Hansen"
+
+
+def test_ask_until_valid_raises_instead_of_looping_when_input_ends(monkeypatch):
+    def no_more_input(prompt=""):
+        raise EOFError
+    monkeypatch.setattr("builtins.input", no_more_input)
+    assert ask_until_valid("Seats", "2", int) == 2           # valid default is used at end of input
+    with pytest.raises(InvalidRequestError, match="y or n"):  # invalid default must not loop forever
+        ask_until_valid("Confirm", "", _yes_no)
 
 
 @pytest.mark.parametrize("args, message", [

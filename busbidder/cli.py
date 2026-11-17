@@ -14,7 +14,7 @@ from datetime import date, datetime
 from pathlib import Path
 
 from . import __version__
-from .booking import Booking, BookingService, BookingStore
+from .booking import MAX_SEATS_PER_BOOKING, NAME_RE, Booking, BookingService, BookingStore
 from .config import Settings, load_settings
 from .exceptions import BusBidderError, InvalidRequestError
 from .explain import explain_top
@@ -287,24 +287,28 @@ def cmd_search(app: App, args) -> int:
 
 
 def interactive_booking(app: App, ranking: Ranking, seats: int) -> None:
-    print()
-    choice = ask("Enter a rank number or offer id to book (press Enter to skip)", "")
-    if not choice:
-        print("No booking made.")
-        return
-    if choice.isdigit():
-        index = int(choice)
-        if not 1 <= index <= len(ranking.items):
-            raise InvalidRequestError(f"Rank {index} does not exist (1-{len(ranking.items)}).")
-        offer = ranking.items[index - 1].offer
-    else:
+    def pick(choice: str):
+        if not choice:
+            return None
+        if choice.isdigit():
+            index = int(choice)
+            if not 1 <= index <= len(ranking.items):
+                raise InvalidRequestError(f"Rank {index} does not exist (1-{len(ranking.items)}).")
+            return ranking.items[index - 1].offer
         offer = next((i.offer for i in ranking.items if i.offer.offer_id == choice.strip().upper()), None)
         if offer is None:
             raise InvalidRequestError(f"Offer '{choice}' is not in this ranking.")
-    name = ask("Traveller name", "")
+        return offer
+
+    print()
+    offer = ask_until_valid("Enter a rank number or offer id to book (press Enter to skip)", "", pick)
+    if offer is None:
+        print("No booking made.")
+        return
+    name = ask_until_valid("Traveller name", "", _traveller_name)
     print(f"\nYou are booking {offer.offer_id}: {offer.company.name}, {offer.departure:%a %d %b %H:%M}, "
           f"{seats} seat(s) x EUR {offer.price_eur:.2f} = EUR {offer.price_eur * seats:.2f}; {offer.fare.summary}.")
-    if ask("Confirm booking? (y/n)", "n").lower() not in ("y", "yes"):
+    if not ask_until_valid("Confirm booking? (y/n)", "n", _yes_no):
         print("Booking cancelled by user; nothing was saved.")
         return
     booking = app.bookings.book(offer.offer_id, name, seats)
@@ -446,13 +450,36 @@ def cmd_profiles(app: App, args) -> int:
 # ======================================================================
 # Interactive mode
 # ======================================================================
-def ask(prompt: str, default: str | None = None) -> str:
+def _read(prompt: str, default: str | None) -> tuple[str, bool]:
+    """Read one answer; returns (answer or default, True if input has ended)."""
     suffix = f" [{default}]" if default not in (None, "") else ""
     try:
-        answer = input(f"{prompt}{suffix}: ").strip()
+        answer, ended = input(f"{prompt}{suffix}: ").strip(), False
     except EOFError:
-        answer = ""
-    return answer or (default or "")
+        answer, ended = "", True
+    return answer or (default or ""), ended
+
+
+def ask(prompt: str, default: str | None = None) -> str:
+    return _read(prompt, default)[0]
+
+
+def ask_until_valid(prompt: str, default: str | None, check):
+    """Ask until ``check(answer)`` succeeds and return its result.
+
+    ``check`` raises a ``BusBidderError`` for an invalid answer; the message is
+    shown and the question is asked again, so one typo does not end the
+    session.  If the input stream ends (EOF) the error is raised instead of
+    looping forever.
+    """
+    while True:
+        answer, ended = _read(prompt, default)
+        try:
+            return check(answer)
+        except BusBidderError as exc:
+            if ended:
+                raise
+            print(f"  {exc} Please try again.")
 
 
 def _number(text: str, kind, what: str):
@@ -462,29 +489,96 @@ def _number(text: str, kind, what: str):
         raise InvalidRequestError(f"{what} must be a number, got '{text}'.") from exc
 
 
+def _optional_number(kind, what: str, minimum: float, exclusive: bool = False):
+    """Validator for an optional number (empty answer = no limit)."""
+    def check(text: str):
+        if not text:
+            return None
+        value = _number(text, kind, what)
+        if value < minimum or (exclusive and value == minimum):
+            bound = f"greater than {minimum:g}" if exclusive else f"at least {minimum:g}"
+            raise InvalidRequestError(f"{what} must be {bound}, got '{text}'.")
+        return value
+    return check
+
+
+def _yes_no(text: str) -> bool:
+    answer = text.strip().lower()
+    if answer in ("y", "yes"):
+        return True
+    if answer in ("n", "no"):
+        return False
+    raise InvalidRequestError(f"Please answer y or n, got '{text}'.")
+
+
+def _seat_count(text: str) -> int:
+    seats = _number(text, int, "Number of seats")
+    if not 1 <= seats <= MAX_SEATS_PER_BOOKING:
+        raise InvalidRequestError(f"Number of seats must be between 1 and {MAX_SEATS_PER_BOOKING}.")
+    return seats
+
+
+def _traveller_name(text: str) -> str:
+    if not NAME_RE.match(text):
+        raise InvalidRequestError(
+            "Traveller name must be 2-60 letters (spaces, hyphens, apostrophes and dots allowed)."
+        )
+    return text
+
+
 def cmd_interactive(app: App, args) -> int:
     heading("BusBidder Spain - guided search")
     print("Departures from Madrid. Destinations: " + ", ".join(sorted(d.name for d in app.marketplace.destinations.values())))
+    # Each answer is checked as soon as it is given; an invalid answer is
+    # explained and the question repeated (see ask_until_valid).
+    def destination(text: str) -> str:
+        app.marketplace.find_destination(text)
+        return text
+
+    def first_date(text: str) -> str:
+        parse_date(text)
+        return text
+
+    def last_date(text: str) -> str:
+        if parse_date(text) < parse_date(ns.from_date):
+            raise InvalidRequestError(f"The last travel date must not be before {ns.from_date}.")
+        return text
+
+    def profile(text: str) -> str | None:
+        if not text:
+            return None
+        app._profile(text)  # raises for an unknown profile key
+        return text
+
+    def departure(text: str) -> str:
+        DeparturePreference.parse(text)
+        return text
+
+    def weights(text: str) -> str:
+        validate_weights(parse_weights(text))
+        return text
+
     ns = argparse.Namespace(
-        to=ask("Destination", "Malaga"),
-        from_date=ask("First travel date (YYYY-MM-DD)", "2027-07-12"),
-        to_date=None, profile=None, budget=None, max_transfers=None, luggage=None, max_duration=None,
-        changeable=False, refundable=False, depart=None, weights=None, seats=1,
-        top=10, show_removed=0, export=None, book=True,
+        to=None, from_date=None, to_date=None, profile=None, budget=None, max_transfers=None,
+        luggage=None, max_duration=None, changeable=False, refundable=False, depart=None, weights=None,
+        seats=1, top=10, show_removed=0, export=None, book=True,
     )
-    ns.to_date = ask("Last travel date (YYYY-MM-DD)", ns.from_date)
+    ns.to = ask_until_valid("Destination", "Malaga", destination)
+    ns.from_date = ask_until_valid("First travel date (YYYY-MM-DD)", "2027-07-12", first_date)
+    ns.to_date = ask_until_valid("Last travel date (YYYY-MM-DD)", ns.from_date, last_date)
     print("Profiles: " + ", ".join(f"{k} ({p.name})" for k, p in app.profiles.items()))
-    ns.profile = ask("Profile to start from (Enter for custom)", "") or None
+    ns.profile = ask_until_valid("Profile to start from (Enter for custom)", "", profile)
     if not ns.profile:
-        budget = ask("Maximum price per passenger in EUR (Enter = no limit)", "")
-        ns.budget = _number(budget, float, "Maximum price") if budget else None
-        transfers = ask("Maximum transfers (Enter = no limit)", "")
-        ns.max_transfers = _number(transfers, int, "Maximum transfers") if transfers else None
-        ns.changeable = ask("Changeable ticket required? (y/n)", "n").lower().startswith("y")
-        ns.refundable = ask("Refundable ticket required? (y/n)", "n").lower().startswith("y")
-        ns.depart = ask("Preferred departure (morning/afternoon/evening/night/any or HH:MM)", "any")
-        ns.weights = ask("Weights", "price=40,duration=25,departure=15,flexibility=20")
-    ns.seats = _number(ask("Number of seats", "1"), int, "Number of seats")
+        ns.budget = ask_until_valid("Maximum price per passenger in EUR (Enter = no limit)", "",
+                                    _optional_number(float, "Maximum price", 0, exclusive=True))
+        ns.max_transfers = ask_until_valid("Maximum transfers (Enter = no limit)", "",
+                                           _optional_number(int, "Maximum transfers", 0))
+        ns.changeable = ask_until_valid("Changeable ticket required? (y/n)", "n", _yes_no)
+        ns.refundable = ask_until_valid("Refundable ticket required? (y/n)", "n", _yes_no)
+        ns.depart = ask_until_valid("Preferred departure (morning/afternoon/evening/night/any or HH:MM)",
+                                    "any", departure)
+        ns.weights = ask_until_valid("Weights", "price=40,duration=25,departure=15,flexibility=20", weights)
+    ns.seats = ask_until_valid("Number of seats", "1", _seat_count)
     return cmd_search(app, ns)
 
 

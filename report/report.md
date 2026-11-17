@@ -40,7 +40,7 @@ I read the question as having three parts, and they shaped the whole design.
 | Metaprogramming technique | decorator registry and `__init_subclass__` registry (section 2.3) |
 | Intuitive interface | `cli.py`: ten sub-commands and an interactive mode |
 | Reproducible ranking | deterministic scoring and tie-breaking, seeded data generator (section 9) |
-| Tests: normal, invalid, missing, boundary | 188 pytest tests (section 7.1) |
+| Tests: normal, invalid, missing, boundary | 190 pytest tests (section 7.1) |
 
 ## 1.2 Assumptions
 
@@ -373,7 +373,7 @@ refused.
 
 ## 7.1 Automated tests
 
-The suite has 188 pytest tests (`python -m pytest`, about 6 seconds). Every test works on temporary copies of
+The suite has 190 pytest tests (`python -m pytest`, about 6 seconds). Every test works on temporary copies of
 the data, so the tests never touch `state/` or `output/`.
 
 | Test file | Tests | What is covered |
@@ -383,7 +383,7 @@ the data, so the tests never touch `state/` or `output/`.
 | `test_scoring.py` | 52 | direction; identical values; single offer; minimum meaningful range; outlier clipping including the zero-IQR case; neutral missing values; scores within 0-100; departure decay and midnight wrap; flexibility categories; weight parsing and every weight error |
 | `test_ranking.py` | 11 | total equals the weighted sum; weights change the winner; deterministic ties regardless of input order; identical results on repeated runs; sensitivity detection; explanation content |
 | `test_booking.py` | 20 | reference format; seat reduction; persistence across restarts; booking the exact remaining seats; overbooking; sold out; invalid names and seat counts; departed offers; reference collision; refund, credit and no-refund cancellation; corrupt booking file |
-| `test_profiles_cli.py` | 28 | profiles produce three different winners; invalid profiles and settings; simulated clock; end-to-end CLI runs of search, compare, book, cancel and the interactive selection; exit code 2 with clear messages |
+| `test_profiles_cli.py` | 30 | profiles produce three different winners; invalid profiles and settings; simulated clock; end-to-end CLI runs of search, compare, book, cancel and the interactive selection; re-asking after invalid interactive answers; exit code 2 with clear messages |
 
 Writing boundary tests exposed one real ambiguity, the end of the "morning" window. I defined windows as
 half-open (06:00 <= t < 12:00). A 12:00 departure is then 0 minutes outside the window and still scores 100. A
@@ -626,7 +626,7 @@ would otherwise have left implicit.
 the data generator, the automated tests.
 **How the generated material was checked.**
 
-* All 188 automated tests were run and pass. They include boundary cases whose expected values were calculated
+* All 190 automated tests were run and pass. They include boundary cases whose expected values were calculated
   by hand, for example the outlier-clipping and sensitivity cases.
 * Each command was run manually and its output was read: search, compare, book, cancel, validate and every error
   path. The transcripts are kept in `output/evidence/`.
